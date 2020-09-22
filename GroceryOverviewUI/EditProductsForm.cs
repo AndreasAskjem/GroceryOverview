@@ -31,6 +31,7 @@ namespace GroceryOverviewUI
             }
         }
         private List<ProductModel> Products { get; set; }
+        private BindingSource ProductsBindingSource = new BindingSource();
 
         private TagModel SelectedTag { get; set; }
 
@@ -59,13 +60,19 @@ namespace GroceryOverviewUI
 
         private void WireUpProducts()
         {
-            EditProductsListBox.SelectionMode = SelectionMode.None;
+            EditProductsListBox.SelectedIndexChanged -= new EventHandler(EditProductsListBox_SelectedIndexChanged);
+            int topIndex = EditProductsListBox.TopIndex;
 
             Products.ForEach(p => p.SetDisplayName());
-            EditProductsListBox.DataSource = Products;
-            EditProductsListBox.DisplayMember = nameof(ProductModel.DisplayName);
 
-            EditProductsListBox.SelectionMode = SelectionMode.MultiSimple;
+            ProductsBindingSource.DataSource = Products;
+            EditProductsListBox.DataSource = ProductsBindingSource;
+            EditProductsListBox.DisplayMember = nameof(ProductModel.DisplayName);
+            ProductsBindingSource.ResetBindings(false);
+            EditProductsListBox.ClearSelected();
+
+            EditProductsListBox.TopIndex = topIndex;
+            EditProductsListBox.SelectedIndexChanged += new EventHandler(EditProductsListBox_SelectedIndexChanged);
         }
 
         private void AddProductButton_Click(object sender, EventArgs e)
@@ -86,13 +93,16 @@ namespace GroceryOverviewUI
             // Returns empty string if input is acceptable, and an error message if not.
             string validationResult = ValidateTextInput.ProductName(ProductNameInputTextBox.Text, Products);
 
-            ProductModel productModel = new ProductModel(ProductNameInputTextBox.Text);
+            ProductModel newProduct = new ProductModel(ProductNameInputTextBox.Text);
 
             if (validationResult == "")
             {
-                //ProductModel productModel = new ProductModel(ProductNameInputTextBox.Text);
                 // The model for the new products is currently returned here but might not be needed.
-                productModel = GlobalConfig.Connection.AddProduct(productModel);
+                newProduct = GlobalConfig.Connection.AddProduct(newProduct);
+
+                EditTagsOfProduct editTagsOfProduct = new EditTagsOfProduct(newProduct);
+                editTagsOfProduct.ShowDialog();
+
             }
             else
             {
@@ -100,29 +110,22 @@ namespace GroceryOverviewUI
                 return;
             }
 
-            //TODO - Also open EditTagsOfProduct with the new product.
-            //Somehting like this:
-            //EditTagsOfProduct editTagsOfProduct = new EditTagsOfProduct(productModel);
-            //editTagsOfProduct.ShowDialog();
-
+            
             ProductNameInputTextBox.Text = "";
+
+            GetDataFromDatabase();
             UpdateListBoxForSelectedTag();
         }
 
         private void EditProductsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ListBox productListBox = (ListBox)sender;
-            ProductModel clickedProduct = (ProductModel)productListBox.SelectedValue;
-            if (clickedProduct == null)
-            {
-                return;
-            }
+            ProductModel clickedProduct = (ProductModel)EditProductsListBox.SelectedValue;
 
             EditTagsOfProduct editTagsOfProduct = new EditTagsOfProduct(clickedProduct);
             editTagsOfProduct.ShowDialog();
 
-            productListBox.ClearSelected();
-            UpdateListBoxForSelectedTag();
+            GetDataFromDatabase();
+            WireUpProducts();
         }
 
         private void TagDropDown_SelectedIndexChanged(object sender, EventArgs e)

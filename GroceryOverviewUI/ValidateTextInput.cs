@@ -26,10 +26,16 @@ namespace GroceryOverviewUI
             string errorMessage = "";
             errorMessage += GeneralChecking(input, tags);
 
+            if (input.ToLower().Contains("all products"))
+            {
+                errorMessage += $"* \"{input}\" is a reserved tag name so it can't be added\n";
+            }
+
             if (errorMessage != "")
             {
                 errorMessage = $"\"{input}\" is not a valid tag name.\nPlease fix the following error(s):\n\n" + errorMessage;
             }
+
             return errorMessage;
         }
 

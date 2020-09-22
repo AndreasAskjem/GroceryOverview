@@ -109,13 +109,11 @@ namespace GroceryOverviewLibrary.DataAccess
             {
                 var p = new DynamicParameters();
                 p.Add("@id", productModel.id);
-                //p.Add("@NeedsRefill", 0, dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                p.Add("@NeedsRefill", 0, dbType: DbType.Boolean, direction: ParameterDirection.Output);
 
                 connection.Execute("dbo.spToggleProductNeedsRefill", p, commandType: CommandType.StoredProcedure);
 
-                //productModel.NeedsRefill = p.Get<bool>("@NeedsRefill");
-                productModel.NeedsRefill = !productModel.NeedsRefill;
-                // TODO - Might go back and fix this to return the updated product from the DB instead of assuming the change.
+                productModel.NeedsRefill = p.Get<bool>("@NeedsRefill");
 
                 return productModel;
             }

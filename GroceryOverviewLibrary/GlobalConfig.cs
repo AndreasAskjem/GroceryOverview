@@ -27,7 +27,7 @@ namespace GroceryOverviewLibrary
         
         public static string DropdownDefaultText()
         {
-            return "All Products  ";
+            return "All Products";
         }
     }
 }
