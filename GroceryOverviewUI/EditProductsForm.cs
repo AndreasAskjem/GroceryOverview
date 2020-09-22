@@ -79,7 +79,6 @@ namespace GroceryOverviewUI
         {
             AddProductFromTextBox();
         }
-
         private void ProductNameInputTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)

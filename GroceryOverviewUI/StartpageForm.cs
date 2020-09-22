@@ -55,7 +55,7 @@ namespace GroceryOverviewUI
         private void WireUpProducts()
         {
             //Stops SelectedIndexChanged from doing anything when the listbox is changed by the code.
-            ProductsListBox.SelectedIndexChanged -= new EventHandler(listBox1_SelectedIndexChanged);
+            ProductsListBox.SelectedIndexChanged -= new EventHandler(ProductsListBox_SelectedIndexChanged);
             //Stops the ListBox from scrolling to the top when changed.
             int topIndex = ProductsListBox.TopIndex;
 
@@ -68,15 +68,13 @@ namespace GroceryOverviewUI
             ProductsListBox.ClearSelected();
 
             ProductsListBox.TopIndex = topIndex;
-            ProductsListBox.SelectedIndexChanged += new EventHandler(listBox1_SelectedIndexChanged);
+            ProductsListBox.SelectedIndexChanged += new EventHandler(ProductsListBox_SelectedIndexChanged);
         }
 
 
         private void StartpageForm_Load(object sender, EventArgs e) { }
 
-        private void label1_Click(object sender, EventArgs e) { }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void ProductsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             ProductModel clickedProduct = (ProductModel)ProductsListBox.SelectedValue;
             int index = ProductsListBox.SelectedIndex;

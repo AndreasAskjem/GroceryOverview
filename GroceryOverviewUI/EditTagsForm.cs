@@ -31,19 +31,39 @@ namespace GroceryOverviewUI
 
         private void WireUpTags()
         {
+            EditTagsListBox.SelectedIndexChanged -= new EventHandler(EditTagsListBox_SelectedIndexChanged);
+
             EditTagsListBox.DataSource = Tags;
             EditTagsListBox.DisplayMember = nameof(TagModel.Name);
+            EditTagsListBox.ClearSelected();
+
+            EditTagsListBox.SelectedIndexChanged += new EventHandler(EditTagsListBox_SelectedIndexChanged);
         }
 
 
         private void AddTagButton_Click(object sender, EventArgs e)
         {
+            AddTagFromTexBox();
+        }
+        private void TagNameInputTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                AddTagFromTexBox();
+            }
+        }
+
+        private void AddTagFromTexBox()
+        {
             string validationResult = ValidateTextInput.TagName(TagNameInputTextBox.Text, Tags);
 
-            if(validationResult == "")
+            if (validationResult == "")
             {
-                TagModel tagModel = new TagModel(TagNameInputTextBox.Text);
-                GlobalConfig.Connection.AddTag(tagModel);
+                TagModel newTag = new TagModel(TagNameInputTextBox.Text);
+                GlobalConfig.Connection.AddTag(newTag);
+
+                EditProductsOfTag editProductsOfTag = new EditProductsOfTag(newTag);
+                editProductsOfTag.ShowDialog();
             }
             else
             {
@@ -51,6 +71,18 @@ namespace GroceryOverviewUI
             }
 
             TagNameInputTextBox.Text = "";
+
+            GetDataFromDatabase();
+            WireUpTags();
+        }
+
+        private void EditTagsListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            TagModel clickedTag = (TagModel)EditTagsListBox.SelectedValue;
+
+            EditProductsOfTag editProductsOfTag = new EditProductsOfTag(clickedTag);
+            editProductsOfTag.ShowDialog();
+
             GetDataFromDatabase();
             WireUpTags();
         }
@@ -64,6 +96,7 @@ namespace GroceryOverviewUI
             WireUpTags();
         }
 
+        
         //TODO - Add an "Edit connected products" button and make a form similar to EditTagsOfProduct (called EditProductsOfTagForm?).
         //Make the Add tag button open this window.
     }

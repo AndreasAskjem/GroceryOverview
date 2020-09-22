@@ -51,6 +51,8 @@ namespace GroceryOverviewUI
             TagsListBox.DisplayMember = nameof(TagModel.ListBoxName);
 
             TagsListBox.SelectionMode = SelectionMode.MultiSimple;
+
+            //TODO - Take a closer look if something can be simplified or improved here.
         }
 
 

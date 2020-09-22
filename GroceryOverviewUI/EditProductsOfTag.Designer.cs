@@ -1,6 +1,6 @@
 ﻿namespace GroceryOverviewUI
 {
-    partial class EditTag
+    partial class EditProductsOfTag
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@
         {
             this.OkayButton = new System.Windows.Forms.Button();
             this.DeleteTagButton = new System.Windows.Forms.Button();
-            this.ProductsListBoxLable = new System.Windows.Forms.Label();
+            this.ProductListBoxLable = new System.Windows.Forms.Label();
             this.ProductsListBox = new System.Windows.Forms.ListBox();
             this.EditingTagLable = new System.Windows.Forms.Label();
             this.EditingTextLable = new System.Windows.Forms.Label();
@@ -45,6 +45,7 @@
             this.OkayButton.TabIndex = 18;
             this.OkayButton.Text = "Okay";
             this.OkayButton.UseVisualStyleBackColor = true;
+            this.OkayButton.Click += new System.EventHandler(this.OkayButton_Click);
             // 
             // DeleteTagButton
             // 
@@ -55,16 +56,17 @@
             this.DeleteTagButton.TabIndex = 17;
             this.DeleteTagButton.Text = "Delete";
             this.DeleteTagButton.UseVisualStyleBackColor = true;
+            this.DeleteTagButton.Click += new System.EventHandler(this.DeleteTagButton_Click);
             // 
-            // ProductsListBoxLable
+            // ProductListBoxLable
             // 
-            this.ProductsListBoxLable.AutoSize = true;
-            this.ProductsListBoxLable.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ProductsListBoxLable.Location = new System.Drawing.Point(172, 64);
-            this.ProductsListBoxLable.Name = "ProductsListBoxLable";
-            this.ProductsListBoxLable.Size = new System.Drawing.Size(71, 21);
-            this.ProductsListBoxLable.TabIndex = 16;
-            this.ProductsListBoxLable.Text = "Products";
+            this.ProductListBoxLable.AutoSize = true;
+            this.ProductListBoxLable.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ProductListBoxLable.Location = new System.Drawing.Point(172, 64);
+            this.ProductListBoxLable.Name = "ProductListBoxLable";
+            this.ProductListBoxLable.Size = new System.Drawing.Size(71, 21);
+            this.ProductListBoxLable.TabIndex = 16;
+            this.ProductListBoxLable.Text = "Products";
             // 
             // ProductsListBox
             // 
@@ -96,21 +98,21 @@
             this.EditingTextLable.TabIndex = 13;
             this.EditingTextLable.Text = "Editing:";
             // 
-            // EditTag
+            // EditProductsOfTag
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(396, 736);
             this.Controls.Add(this.OkayButton);
             this.Controls.Add(this.DeleteTagButton);
-            this.Controls.Add(this.ProductsListBoxLable);
+            this.Controls.Add(this.ProductListBoxLable);
             this.Controls.Add(this.ProductsListBox);
             this.Controls.Add(this.EditingTagLable);
             this.Controls.Add(this.EditingTextLable);
             this.Font = new System.Drawing.Font("Segoe UI", 15.75F);
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
-            this.Name = "EditTag";
-            this.Text = "Edit Tag";
+            this.Name = "EditProductsOfTag";
+            this.Text = "EditProductsOfTag";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -120,7 +122,7 @@
 
         private System.Windows.Forms.Button OkayButton;
         private System.Windows.Forms.Button DeleteTagButton;
-        private System.Windows.Forms.Label ProductsListBoxLable;
+        private System.Windows.Forms.Label ProductListBoxLable;
         private System.Windows.Forms.ListBox ProductsListBox;
         private System.Windows.Forms.Label EditingTagLable;
         private System.Windows.Forms.Label EditingTextLable;

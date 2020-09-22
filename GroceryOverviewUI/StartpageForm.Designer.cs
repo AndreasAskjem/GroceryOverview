@@ -46,7 +46,6 @@
             this.HeaderLable.Size = new System.Drawing.Size(127, 37);
             this.HeaderLable.TabIndex = 0;
             this.HeaderLable.Text = "Overview";
-            this.HeaderLable.Click += new System.EventHandler(this.label1_Click);
             // 
             // ProductsListBox
             // 
@@ -57,7 +56,7 @@
             this.ProductsListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.ProductsListBox.Size = new System.Drawing.Size(372, 394);
             this.ProductsListBox.TabIndex = 1;
-            this.ProductsListBox.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            this.ProductsListBox.SelectedIndexChanged += new System.EventHandler(this.ProductsListBox_SelectedIndexChanged);
             // 
             // TagDropDown
             // 

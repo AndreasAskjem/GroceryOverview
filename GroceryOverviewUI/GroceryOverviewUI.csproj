@@ -54,11 +54,11 @@
     <Compile Include="EditProductsForm.Designer.cs">
       <DependentUpon>EditProductsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="EditTag.cs">
+    <Compile Include="EditProductsOfTag.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EditTag.Designer.cs">
-      <DependentUpon>EditTag.cs</DependentUpon>
+    <Compile Include="EditProductsOfTag.Designer.cs">
+      <DependentUpon>EditProductsOfTag.cs</DependentUpon>
     </Compile>
     <Compile Include="EditTagsForm.cs">
       <SubType>Form</SubType>
@@ -90,8 +90,8 @@
     <EmbeddedResource Include="EditProductsForm.resx">
       <DependentUpon>EditProductsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EditTag.resx">
-      <DependentUpon>EditTag.cs</DependentUpon>
+    <EmbeddedResource Include="EditProductsOfTag.resx">
+      <DependentUpon>EditProductsOfTag.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditTagsForm.resx">
       <DependentUpon>EditTagsForm.cs</DependentUpon>

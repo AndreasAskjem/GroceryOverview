@@ -41,6 +41,7 @@
             this.TagNameInputTextBox.Name = "TagNameInputTextBox";
             this.TagNameInputTextBox.Size = new System.Drawing.Size(370, 35);
             this.TagNameInputTextBox.TabIndex = 1;
+            this.TagNameInputTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TagNameInputTextBox_KeyDown);
             // 
             // AddTagButton
             // 
@@ -61,6 +62,7 @@
             this.EditTagsListBox.Name = "EditTagsListBox";
             this.EditTagsListBox.Size = new System.Drawing.Size(372, 484);
             this.EditTagsListBox.TabIndex = 7;
+            this.EditTagsListBox.SelectedIndexChanged += new System.EventHandler(this.EditTagsListBox_SelectedIndexChanged);
             // 
             // TagListBoxLable
             // 
