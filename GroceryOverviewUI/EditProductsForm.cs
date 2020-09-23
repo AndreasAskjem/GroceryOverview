@@ -123,7 +123,7 @@ namespace GroceryOverviewUI
             EditTagsOfProduct editTagsOfProduct = new EditTagsOfProduct(clickedProduct);
             editTagsOfProduct.ShowDialog();
 
-            GetDataFromDatabase();
+            UpdateListBoxForSelectedTag();
             WireUpProducts();
         }
 

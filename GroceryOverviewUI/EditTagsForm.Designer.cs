@@ -32,7 +32,6 @@
             this.AddTagButton = new System.Windows.Forms.Button();
             this.EditTagsListBox = new System.Windows.Forms.ListBox();
             this.TagListBoxLable = new System.Windows.Forms.Label();
-            this.DeleteTagButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // TagNameInputTextBox
@@ -60,7 +59,7 @@
             this.EditTagsListBox.ItemHeight = 30;
             this.EditTagsListBox.Location = new System.Drawing.Point(12, 180);
             this.EditTagsListBox.Name = "EditTagsListBox";
-            this.EditTagsListBox.Size = new System.Drawing.Size(372, 484);
+            this.EditTagsListBox.Size = new System.Drawing.Size(372, 544);
             this.EditTagsListBox.TabIndex = 7;
             this.EditTagsListBox.SelectedIndexChanged += new System.EventHandler(this.EditTagsListBox_SelectedIndexChanged);
             // 
@@ -74,23 +73,11 @@
             this.TagListBoxLable.TabIndex = 8;
             this.TagListBoxLable.Text = "Tags";
             // 
-            // DeleteTagButton
-            // 
-            this.DeleteTagButton.Font = new System.Drawing.Font("Segoe UI", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DeleteTagButton.Location = new System.Drawing.Point(12, 670);
-            this.DeleteTagButton.Name = "DeleteTagButton";
-            this.DeleteTagButton.Size = new System.Drawing.Size(370, 57);
-            this.DeleteTagButton.TabIndex = 9;
-            this.DeleteTagButton.Text = "Delete Selected Tag";
-            this.DeleteTagButton.UseVisualStyleBackColor = true;
-            this.DeleteTagButton.Click += new System.EventHandler(this.DeleteTagButton_Click);
-            // 
             // EditTagsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(396, 736);
-            this.Controls.Add(this.DeleteTagButton);
             this.Controls.Add(this.TagListBoxLable);
             this.Controls.Add(this.EditTagsListBox);
             this.Controls.Add(this.AddTagButton);
@@ -110,6 +97,5 @@
         private System.Windows.Forms.Button AddTagButton;
         private System.Windows.Forms.ListBox EditTagsListBox;
         private System.Windows.Forms.Label TagListBoxLable;
-        private System.Windows.Forms.Button DeleteTagButton;
     }
 }

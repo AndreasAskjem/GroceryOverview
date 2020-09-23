@@ -16,6 +16,7 @@ namespace GroceryOverviewUI
     {
         private TagModel ClickedTag { get; set; }
         private List<ProductModel> AllProducts { get; set; }
+        private BindingSource AllProductsBindingSource = new BindingSource();
         private List<ProductModel> SelectedProducts { get; set; }
         public EditProductsOfTag(TagModel clickedTag)
         {
@@ -37,8 +38,8 @@ namespace GroceryOverviewUI
         private void WireUpProducts()
         {
             ProductsListBox.SelectedIndexChanged -= new EventHandler(ProductsListBox_SelectedIndexChanged);
+            int topIndex = ProductsListBox.TopIndex;
 
-            AllProducts.ForEach(product => product.SetDisplayName(true));
             for(int i=0; i<AllProducts.Count; i++)
             {
                 var index = SelectedProducts.FindIndex(selectedProduct => selectedProduct.id == AllProducts[i].id);
@@ -46,12 +47,16 @@ namespace GroceryOverviewUI
                 AllProducts[i].SetDisplayName(isInSelectedProducts);
             }
 
-            ProductsListBox.DataSource = AllProducts;
+            AllProductsBindingSource.DataSource = AllProducts;
+            ProductsListBox.DataSource = AllProductsBindingSource;
             ProductsListBox.DisplayMember = nameof(ProductModel.DisplayName);
+            AllProductsBindingSource.ResetBindings(false);
             ProductsListBox.ClearSelected();
 
+            ProductsListBox.TopIndex = topIndex;
             ProductsListBox.SelectedIndexChanged += new EventHandler(ProductsListBox_SelectedIndexChanged);
         }
+
 
         private void ProductsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {

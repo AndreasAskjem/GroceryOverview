@@ -80,24 +80,13 @@ namespace GroceryOverviewUI
         {
             TagModel clickedTag = (TagModel)EditTagsListBox.SelectedValue;
 
+            if(clickedTag == null) { return; }
+
             EditProductsOfTag editProductsOfTag = new EditProductsOfTag(clickedTag);
             editProductsOfTag.ShowDialog();
 
             GetDataFromDatabase();
             WireUpTags();
         }
-
-        private void DeleteTagButton_Click(object sender, EventArgs e)
-        {
-            TagModel tagModel = (TagModel)EditTagsListBox.SelectedItem;
-            GlobalConfig.Connection.DeleteTag(tagModel);
-
-            GetDataFromDatabase();
-            WireUpTags();
-        }
-
-        
-        //TODO - Add an "Edit connected products" button and make a form similar to EditTagsOfProduct (called EditProductsOfTagForm?).
-        //Make the Add tag button open this window.
     }
 }

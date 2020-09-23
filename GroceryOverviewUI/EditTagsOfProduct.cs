@@ -16,6 +16,7 @@ namespace GroceryOverviewUI
     {
         private ProductModel ClickedProduct { get; set; }
         private List<TagModel> AllTags { get; set; }
+        private BindingSource AllTagsBindingSource = new BindingSource();
         private List<TagModel> SelectedTags { get; set; }
 
         public EditTagsOfProduct(ProductModel clickedProduct)
@@ -38,8 +39,8 @@ namespace GroceryOverviewUI
         private void WireUpTags()
         {
             TagsListBox.SelectedIndexChanged -= new EventHandler(TagsListBox_SelectedIndexChanged);
+            int topIndex = TagsListBox.TopIndex;
 
-            AllTags.ForEach(tag => tag.SetListBoxName(true));
             for(int i=0; i<AllTags.Count; i++)
             {
                 var index = SelectedTags.FindIndex(selectedTag => selectedTag.id == AllTags[i].id);
@@ -47,20 +48,19 @@ namespace GroceryOverviewUI
                 AllTags[i].SetListBoxName(isInSelectedTags);
             }
 
-            TagsListBox.DataSource = AllTags;
+            AllTagsBindingSource.DataSource = AllTags;
+            TagsListBox.DataSource = AllTagsBindingSource;
             TagsListBox.DisplayMember = nameof(TagModel.ListBoxName);
-
-
+            AllTagsBindingSource.ResetBindings(false);
             TagsListBox.ClearSelected();
-            TagsListBox.SelectedIndexChanged += new EventHandler(TagsListBox_SelectedIndexChanged);
-            //TODO - Take a closer look if something can be simplified or improved here.
-        }
 
+            TagsListBox.TopIndex = topIndex;
+            TagsListBox.SelectedIndexChanged += new EventHandler(TagsListBox_SelectedIndexChanged);
+        }
 
 
         private void TagsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
             TagModel clickedTag = (TagModel)TagsListBox.SelectedValue;
             GlobalConfig.Connection.ToggleProductTagRelation(ClickedProduct, clickedTag);
 
