@@ -34,6 +34,11 @@ namespace GroceryOverviewLibrary.DataAccess
             }
         }
 
+        /// <summary>
+        ///  Saves a new tag to the database.
+        /// </summary>
+        /// <param name="tagModel"></param>
+        /// <returns></returns>
         public TagModel AddTag(TagModel tagModel)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
@@ -49,6 +54,10 @@ namespace GroceryOverviewLibrary.DataAccess
             }
         }
 
+        /// <summary>
+        ///  Gets all products from the database.
+        /// </summary>
+        /// <returns></returns>
         public List<ProductModel> GetAllProducts()
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
@@ -61,6 +70,10 @@ namespace GroceryOverviewLibrary.DataAccess
             }
         }
 
+        /// <summary>
+        /// Gets all tags from the database.
+        /// </summary>
+        /// <returns></returns>
         public List<TagModel> GetTags()
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
@@ -73,6 +86,11 @@ namespace GroceryOverviewLibrary.DataAccess
             }
         }
 
+        /// <summary>
+        /// Gets all products that are connected to the specific tag.
+        /// </summary>
+        /// <param name="tagModel"></param>
+        /// <returns></returns>
         public List<ProductModel> GetProductsFilteredByTag(TagModel tagModel)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
@@ -88,6 +106,11 @@ namespace GroceryOverviewLibrary.DataAccess
             }
         }
 
+        /// <summary>
+        /// Gets all the tags that are connected to a specific procuct.
+        /// </summary>
+        /// <param name="productModel"></param>
+        /// <returns></returns>
         public List<TagModel> GetTagsBelongingToProduct(ProductModel productModel)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
@@ -103,6 +126,11 @@ namespace GroceryOverviewLibrary.DataAccess
             }
         }
 
+        /// <summary>
+        /// Toggles the "NeedsRefill" value of a product.
+        /// </summary>
+        /// <param name="productModel"></param>
+        /// <returns></returns>
         public ProductModel ToggleProductNeedsRefill(ProductModel productModel)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
@@ -119,8 +147,12 @@ namespace GroceryOverviewLibrary.DataAccess
             }
         }
 
-
-
+        /// <summary>
+        /// Adds a connection between tag and product if it doesn't exist.
+        /// Removes the connection if it does exist.
+        /// </summary>
+        /// <param name="product"></param>
+        /// <param name="tag"></param>
         public void ToggleProductTagRelation(ProductModel product, TagModel tag)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
@@ -133,6 +165,10 @@ namespace GroceryOverviewLibrary.DataAccess
             }
         }
 
+        /// <summary>
+        /// Deletes the product from the database.
+        /// </summary>
+        /// <param name="productModel"></param>
         public void DeleteProduct(ProductModel productModel)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
@@ -144,6 +180,10 @@ namespace GroceryOverviewLibrary.DataAccess
             }
         }
 
+        /// <summary>
+        /// Deletes the tag from the database.
+        /// </summary>
+        /// <param name="tagModel"></param>
         public void DeleteTag(TagModel tagModel)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
