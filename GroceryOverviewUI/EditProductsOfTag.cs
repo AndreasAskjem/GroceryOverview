@@ -16,6 +16,7 @@ namespace GroceryOverviewUI
     {
         private TagModel ClickedTag { get; set; }
         private List<ProductModel> AllProducts { get; set; }
+        private List<ProductModel> SelectedProducts { get; set; }
         public EditProductsOfTag(TagModel clickedTag)
         {
             InitializeComponent();
@@ -30,16 +31,39 @@ namespace GroceryOverviewUI
         private void GetDataFromDatabase()
         {
             AllProducts = GlobalConfig.Connection.GetAllProducts();
+            SelectedProducts = GlobalConfig.Connection.GetProductsFilteredByTag(ClickedTag);
         }
 
         private void WireUpProducts()
         {
-            throw new NotImplementedException();
+            ProductsListBox.SelectedIndexChanged -= new EventHandler(ProductsListBox_SelectedIndexChanged);
 
-            //TODO - Continue here to fix EditProductsOfTag.
+            AllProducts.ForEach(product => product.SetDisplayName(true));
+            for(int i=0; i<AllProducts.Count; i++)
+            {
+                var index = SelectedProducts.FindIndex(selectedProduct => selectedProduct.id == AllProducts[i].id);
+                bool isInSelectedProducts = index >= 0;
+                AllProducts[i].SetDisplayName(isInSelectedProducts);
+            }
+
+            ProductsListBox.DataSource = AllProducts;
+            ProductsListBox.DisplayMember = nameof(ProductModel.DisplayName);
+            ProductsListBox.ClearSelected();
+
+            ProductsListBox.SelectedIndexChanged += new EventHandler(ProductsListBox_SelectedIndexChanged);
         }
 
-        private void DeleteTagButton_Click(object sender, EventArgs e)
+        private void ProductsListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ProductModel clickedProduct = (ProductModel)ProductsListBox.SelectedValue;
+            GlobalConfig.Connection.ToggleProductTagRelation(clickedProduct, ClickedTag);
+
+            GetDataFromDatabase();
+            WireUpProducts();
+        }
+    
+
+    private void DeleteTagButton_Click(object sender, EventArgs e)
         {
             GlobalConfig.Connection.DeleteTag(ClickedTag);
             Close();

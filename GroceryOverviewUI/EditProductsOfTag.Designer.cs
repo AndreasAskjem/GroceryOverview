@@ -77,6 +77,7 @@
             this.ProductsListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.ProductsListBox.Size = new System.Drawing.Size(372, 574);
             this.ProductsListBox.TabIndex = 15;
+            this.ProductsListBox.SelectedIndexChanged += new System.EventHandler(this.ProductsListBox_SelectedIndexChanged);
             // 
             // EditingTagLable
             // 

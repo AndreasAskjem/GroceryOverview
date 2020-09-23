@@ -36,5 +36,10 @@ namespace GroceryOverviewLibrary.Models
             string x = NeedsRefill ? "☐" : "🗹";
             DisplayName = $"{x} {Name}";
         }
+        public void SetDisplayName(bool belongsToTag)
+        {
+            string x = belongsToTag ? "🗹" : "☐";
+            DisplayName = $"{x} {Name}";
+        }
     }
 }

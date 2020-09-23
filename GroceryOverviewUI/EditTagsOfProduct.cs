@@ -37,7 +37,7 @@ namespace GroceryOverviewUI
 
         private void WireUpTags()
         {
-            TagsListBox.SelectionMode = SelectionMode.None;
+            TagsListBox.SelectedIndexChanged -= new EventHandler(TagsListBox_SelectedIndexChanged);
 
             AllTags.ForEach(tag => tag.SetListBoxName(true));
             for(int i=0; i<AllTags.Count; i++)
@@ -50,8 +50,9 @@ namespace GroceryOverviewUI
             TagsListBox.DataSource = AllTags;
             TagsListBox.DisplayMember = nameof(TagModel.ListBoxName);
 
-            TagsListBox.SelectionMode = SelectionMode.MultiSimple;
 
+            TagsListBox.ClearSelected();
+            TagsListBox.SelectedIndexChanged += new EventHandler(TagsListBox_SelectedIndexChanged);
             //TODO - Take a closer look if something can be simplified or improved here.
         }
 
@@ -59,16 +60,8 @@ namespace GroceryOverviewUI
 
         private void TagsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ListBox tagsListBox = (ListBox)sender;
-
-            // Returns if the ListBox was changed by the program rather than userinput.
-            if (!tagsListBox.Focused) { return; }
-
-            TagModel clickedTag = (TagModel)tagsListBox.SelectedValue;
-
-            if (clickedTag == null) { return; }
-
-
+            
+            TagModel clickedTag = (TagModel)TagsListBox.SelectedValue;
             GlobalConfig.Connection.ToggleProductTagRelation(ClickedProduct, clickedTag);
 
             GetDataFromDatabase();
