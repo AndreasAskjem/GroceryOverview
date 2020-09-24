@@ -49,6 +49,7 @@
             // 
             // ProductsListBox
             // 
+            this.ProductsListBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.ProductsListBox.FormattingEnabled = true;
             this.ProductsListBox.ItemHeight = 30;
             this.ProductsListBox.Location = new System.Drawing.Point(12, 137);
@@ -57,6 +58,7 @@
             this.ProductsListBox.Size = new System.Drawing.Size(372, 394);
             this.ProductsListBox.TabIndex = 1;
             this.ProductsListBox.SelectedIndexChanged += new System.EventHandler(this.ProductsListBox_SelectedIndexChanged);
+            this.ProductsListBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.ProductsListBox_DrawItem);
             // 
             // TagDropDown
             // 

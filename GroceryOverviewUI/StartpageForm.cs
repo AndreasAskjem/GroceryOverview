@@ -2,6 +2,7 @@
 using GroceryOverviewLibrary.Models;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace GroceryOverviewUI
@@ -63,7 +64,7 @@ namespace GroceryOverviewUI
 
             ProductsBindingSource.DataSource = Products;
             ProductsListBox.DataSource = ProductsBindingSource;
-            ProductsListBox.DisplayMember = nameof(ProductModel.DisplayName);
+            //ProductsListBox.DisplayMember = nameof(ProductModel.DisplayName);
             ProductsBindingSource.ResetBindings(false);
             ProductsListBox.ClearSelected();
 
@@ -133,6 +134,29 @@ namespace GroceryOverviewUI
                 Products = GlobalConfig.Connection.GetProductsFilteredByTag(SelectedTag);
             }
             WireUpProducts();
+        }
+
+        private void ProductsListBox_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            Brush myBrush = Brushes.Black;
+
+
+            var listBox = (ListBox)sender;
+            var myItem = (ProductModel)listBox.Items[e.Index];
+
+            var backgroundColor = myItem.NeedsRefill ? Color.MistyRose : Color.LightGreen;
+
+            e = new DrawItemEventArgs(e.Graphics,
+                                  e.Font,
+                                  e.Bounds,
+                                  e.Index,
+                                  e.State ^ DrawItemState.None,
+                                  e.ForeColor,
+                                  backgroundColor);
+
+            e.DrawBackground();
+            e.Graphics.DrawString(myItem.Name,
+                e.Font, myBrush, e.Bounds, StringFormat.GenericDefault);
         }
     }
 }
