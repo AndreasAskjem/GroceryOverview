@@ -77,6 +77,8 @@ namespace GroceryOverviewUI
         private void ProductsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             ProductModel clickedProduct = (ProductModel)ProductsListBox.SelectedValue;
+            if(clickedProduct == null) { return; }
+
             int index = ProductsListBox.SelectedIndex;
             ProductModel updatedProduct = GlobalConfig.Connection.ToggleProductNeedsRefill(clickedProduct);
             Products[index] = updatedProduct;

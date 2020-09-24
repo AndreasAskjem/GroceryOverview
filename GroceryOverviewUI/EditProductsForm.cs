@@ -119,6 +119,7 @@ namespace GroceryOverviewUI
         private void EditProductsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             ProductModel clickedProduct = (ProductModel)EditProductsListBox.SelectedValue;
+            if (clickedProduct == null) { return; }
 
             EditTagsOfProduct editTagsOfProduct = new EditTagsOfProduct(clickedProduct);
             editTagsOfProduct.ShowDialog();

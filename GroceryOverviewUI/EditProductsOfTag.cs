@@ -61,6 +61,7 @@ namespace GroceryOverviewUI
         private void ProductsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             ProductModel clickedProduct = (ProductModel)ProductsListBox.SelectedValue;
+            if (clickedProduct == null) { return; }
             GlobalConfig.Connection.ToggleProductTagRelation(clickedProduct, ClickedTag);
 
             GetDataFromDatabase();
