@@ -17,9 +17,7 @@ namespace GroceryOverviewUI
             {
                 var tagList = value;
 
-                TagModel unselected = new TagModel();
-                unselected.Name = GlobalConfig.DropdownDefaultText();
-                tagList.Insert(0, unselected);
+                tagList.Insert(0, new TagModel { Name = GlobalConfig.DropdownDefaultText() });
 
                 _tags = tagList;
             }
@@ -60,7 +58,7 @@ namespace GroceryOverviewUI
             //Stops the ListBox from scrolling to the top when changed.
             int topIndex = ProductsListBox.TopIndex;
 
-            Products.ForEach(p => p.SetDisplayName());
+            //Products.ForEach(p => p.SetDisplayName());
 
             ProductsBindingSource.DataSource = Products;
             ProductsListBox.DataSource = ProductsBindingSource;
@@ -123,6 +121,13 @@ namespace GroceryOverviewUI
             UpdateProductsForSelectedTag();
         }
 
+        //TODO - Add a search box.
+        //TODO - Change other ListBoxes to use DrawItem on other ListBoxes.
+        //TODO - Change NeedsRefill from bool to in with values 0/1/2 (too little/running low/enough)?
+        //Need to change the database and ProductModel too if I do that.
+        //TODO - Move most of the DrawItem to an outside function.
+
+
         private void UpdateProductsForSelectedTag()
         {
             if (SelectedTag.Name == GlobalConfig.DropdownDefaultText())
@@ -140,11 +145,11 @@ namespace GroceryOverviewUI
         {
             Brush myBrush = Brushes.Black;
 
-
             var listBox = (ListBox)sender;
-            var myItem = (ProductModel)listBox.Items[e.Index];
+            
+            var listBoxItem = (ProductModel)listBox.Items[e.Index];
 
-            var backgroundColor = myItem.NeedsRefill ? Color.MistyRose : Color.LightGreen;
+            var backgroundColor = listBoxItem.NeedsRefill ? Color.MistyRose : Color.LightGreen;
 
             e = new DrawItemEventArgs(e.Graphics,
                                   e.Font,
@@ -155,7 +160,7 @@ namespace GroceryOverviewUI
                                   backgroundColor);
 
             e.DrawBackground();
-            e.Graphics.DrawString(myItem.Name,
+            e.Graphics.DrawString(listBoxItem.Name,
                 e.Font, myBrush, e.Bounds, StringFormat.GenericDefault);
         }
     }
