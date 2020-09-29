@@ -25,6 +25,8 @@ namespace GroceryOverviewUI
         private List<ProductModel> Products { get; set; }
         private BindingSource ProductsBindingSource = new BindingSource();
 
+        private List<ProductModel> SearchResult { get; set; }
+
         private TagModel SelectedTag { get; set; }
 
 
@@ -58,16 +60,18 @@ namespace GroceryOverviewUI
             //Stops the ListBox from scrolling to the top when changed.
             int topIndex = ProductsListBox.TopIndex;
 
-            //Products.ForEach(p => p.SetDisplayName());
-
             ProductsBindingSource.DataSource = Products;
             ProductsListBox.DataSource = ProductsBindingSource;
-            //ProductsListBox.DisplayMember = nameof(ProductModel.DisplayName);
             ProductsBindingSource.ResetBindings(false);
             ProductsListBox.ClearSelected();
 
             ProductsListBox.TopIndex = topIndex;
             ProductsListBox.SelectedIndexChanged += new EventHandler(ProductsListBox_SelectedIndexChanged);
+
+            //Empties the search box when something else updates the ListBox.
+            SearchTextBox.TextChanged -= new EventHandler(SearchTextBox_TextChanged);
+            SearchTextBox.Text = "";
+            SearchTextBox.TextChanged += new EventHandler(SearchTextBox_TextChanged);
         }
 
 
@@ -121,7 +125,6 @@ namespace GroceryOverviewUI
             UpdateProductsForSelectedTag();
         }
 
-        //TODO - Add a search box.
         //TODO - Change other ListBoxes to use DrawItem on other ListBoxes.
         //TODO - Change NeedsRefill from bool to in with values 0/1/2 (too little/running low/enough)?
         //Need to change the database and ProductModel too if I do that.
@@ -162,6 +165,28 @@ namespace GroceryOverviewUI
             e.DrawBackground();
             e.Graphics.DrawString(listBoxItem.Name,
                 e.Font, myBrush, e.Bounds, StringFormat.GenericDefault);
+        }
+
+
+        private void SearchTextBox_TextChanged(object sender, EventArgs e)
+        {
+            string searchWord = SearchTextBox.Text;
+            if(searchWord == "") {
+                UpdateProductsForSelectedTag();
+                return;
+            } //UpdateForSelectedTag?
+
+            SearchResult = GlobalConfig.Connection.GetProductsBySearch(searchWord);
+
+
+            ProductsListBox.SelectedIndexChanged -= new EventHandler(ProductsListBox_SelectedIndexChanged);
+
+            ProductsBindingSource.DataSource = SearchResult;
+            ProductsListBox.DataSource = ProductsBindingSource;
+            ProductsBindingSource.ResetBindings(false);
+            ProductsListBox.ClearSelected();
+
+            ProductsListBox.SelectedIndexChanged += new EventHandler(ProductsListBox_SelectedIndexChanged);
         }
     }
 }

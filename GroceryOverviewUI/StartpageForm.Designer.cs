@@ -35,6 +35,8 @@
             this.EditProductsButton = new System.Windows.Forms.Button();
             this.EditTagsButton = new System.Windows.Forms.Button();
             this.ProductListBoxLable = new System.Windows.Forms.Label();
+            this.SearchTextBox = new System.Windows.Forms.TextBox();
+            this.SearchLable = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // HeaderLable
@@ -52,13 +54,13 @@
             this.ProductsListBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.ProductsListBox.FormattingEnabled = true;
             this.ProductsListBox.ItemHeight = 30;
-            this.ProductsListBox.Location = new System.Drawing.Point(12, 137);
+            this.ProductsListBox.Location = new System.Drawing.Point(12, 197);
             this.ProductsListBox.Name = "ProductsListBox";
             this.ProductsListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.ProductsListBox.Size = new System.Drawing.Size(372, 394);
+            this.ProductsListBox.Size = new System.Drawing.Size(372, 334);
             this.ProductsListBox.TabIndex = 1;
-            this.ProductsListBox.SelectedIndexChanged += new System.EventHandler(this.ProductsListBox_SelectedIndexChanged);
             this.ProductsListBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.ProductsListBox_DrawItem);
+            this.ProductsListBox.SelectedIndexChanged += new System.EventHandler(this.ProductsListBox_SelectedIndexChanged);
             // 
             // TagDropDown
             // 
@@ -107,11 +109,29 @@
             // 
             this.ProductListBoxLable.AutoSize = true;
             this.ProductListBoxLable.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ProductListBoxLable.Location = new System.Drawing.Point(166, 113);
+            this.ProductListBoxLable.Location = new System.Drawing.Point(159, 173);
             this.ProductListBoxLable.Name = "ProductListBoxLable";
             this.ProductListBoxLable.Size = new System.Drawing.Size(71, 21);
             this.ProductListBoxLable.TabIndex = 9;
             this.ProductListBoxLable.Text = "Products";
+            // 
+            // SearchTextBox
+            // 
+            this.SearchTextBox.Location = new System.Drawing.Point(14, 130);
+            this.SearchTextBox.Name = "SearchTextBox";
+            this.SearchTextBox.Size = new System.Drawing.Size(370, 35);
+            this.SearchTextBox.TabIndex = 10;
+            this.SearchTextBox.TextChanged += new System.EventHandler(this.SearchTextBox_TextChanged);
+            // 
+            // SearchLable
+            // 
+            this.SearchLable.AutoSize = true;
+            this.SearchLable.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.SearchLable.Location = new System.Drawing.Point(167, 106);
+            this.SearchLable.Name = "SearchLable";
+            this.SearchLable.Size = new System.Drawing.Size(57, 21);
+            this.SearchLable.TabIndex = 11;
+            this.SearchLable.Text = "Search";
             // 
             // StartpageForm
             // 
@@ -119,6 +139,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(396, 736);
+            this.Controls.Add(this.SearchLable);
+            this.Controls.Add(this.SearchTextBox);
             this.Controls.Add(this.ProductListBoxLable);
             this.Controls.Add(this.EditTagsButton);
             this.Controls.Add(this.EditProductsButton);
@@ -145,6 +167,8 @@
         private System.Windows.Forms.Button EditProductsButton;
         private System.Windows.Forms.Button EditTagsButton;
         private System.Windows.Forms.Label ProductListBoxLable;
+        private System.Windows.Forms.TextBox SearchTextBox;
+        private System.Windows.Forms.Label SearchLable;
     }
 }
 

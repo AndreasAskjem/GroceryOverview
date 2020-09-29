@@ -56,6 +56,7 @@
             // 
             // TagDropDown
             // 
+            this.TagDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.TagDropDown.FormattingEnabled = true;
             this.TagDropDown.Location = new System.Drawing.Point(12, 138);
             this.TagDropDown.Name = "TagDropDown";

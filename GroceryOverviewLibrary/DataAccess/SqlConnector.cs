@@ -194,5 +194,20 @@ namespace GroceryOverviewLibrary.DataAccess
                 connection.Execute("dbo.spDeleteTag", t, commandType: CommandType.StoredProcedure);
             }
         }
+
+        public List<ProductModel> GetProductsBySearch(string searchWord)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
+            {
+                List<ProductModel> products = new List<ProductModel>();
+
+                var p = new DynamicParameters();
+                p.Add("@Search", searchWord);
+
+                products = connection.Query<ProductModel>("dbo.spGetProductsFilteredBySearch", p, commandType: CommandType.StoredProcedure).ToList();
+
+                return products;
+            }
+        }
     }
 }

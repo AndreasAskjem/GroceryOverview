@@ -17,5 +17,6 @@ namespace GroceryOverviewLibrary.DataAccess
         void DeleteProduct(ProductModel productModel);
         TagModel AddTag(TagModel tagModel);
         void DeleteTag(TagModel tagModel);
+        List<ProductModel> GetProductsBySearch(string searchWord);
     }
 }
