@@ -34,6 +34,8 @@
             this.TagsListBox = new System.Windows.Forms.ListBox();
             this.DeleteProductButton = new System.Windows.Forms.Button();
             this.OkayButton = new System.Windows.Forms.Button();
+            this.ToggleNeedsRefillButton = new System.Windows.Forms.Button();
+            this.HaveEnoughLable = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // EditingTextLable
@@ -99,11 +101,34 @@
             this.OkayButton.UseVisualStyleBackColor = true;
             this.OkayButton.Click += new System.EventHandler(this.OkayButton_Click);
             // 
+            // ToggleNeedsRefillButton
+            // 
+            this.ToggleNeedsRefillButton.Font = new System.Drawing.Font("Segoe UI", 18F);
+            this.ToggleNeedsRefillButton.Location = new System.Drawing.Point(346, 50);
+            this.ToggleNeedsRefillButton.Name = "ToggleNeedsRefillButton";
+            this.ToggleNeedsRefillButton.Size = new System.Drawing.Size(38, 38);
+            this.ToggleNeedsRefillButton.TabIndex = 13;
+            this.ToggleNeedsRefillButton.Text = "☓";
+            this.ToggleNeedsRefillButton.UseVisualStyleBackColor = true;
+            this.ToggleNeedsRefillButton.Click += new System.EventHandler(this.ToggleNeedsRefillButton_Click);
+            // 
+            // HaveEnoughLable
+            // 
+            this.HaveEnoughLable.AutoSize = true;
+            this.HaveEnoughLable.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.HaveEnoughLable.Location = new System.Drawing.Point(244, 50);
+            this.HaveEnoughLable.Name = "HaveEnoughLable";
+            this.HaveEnoughLable.Size = new System.Drawing.Size(105, 21);
+            this.HaveEnoughLable.TabIndex = 14;
+            this.HaveEnoughLable.Text = "Have enough:";
+            // 
             // EditTagsOfProduct
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(396, 736);
+            this.Controls.Add(this.ToggleNeedsRefillButton);
+            this.Controls.Add(this.HaveEnoughLable);
             this.Controls.Add(this.OkayButton);
             this.Controls.Add(this.DeleteProductButton);
             this.Controls.Add(this.TagListBoxLable);
@@ -127,5 +152,7 @@
         private System.Windows.Forms.ListBox TagsListBox;
         private System.Windows.Forms.Button DeleteProductButton;
         private System.Windows.Forms.Button OkayButton;
+        private System.Windows.Forms.Button ToggleNeedsRefillButton;
+        private System.Windows.Forms.Label HaveEnoughLable;
     }
 }

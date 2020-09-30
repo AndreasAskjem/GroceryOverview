@@ -25,6 +25,7 @@ namespace GroceryOverviewUI
 
             ClickedProduct = clickedProduct;
             EditingProductLable.Text = ClickedProduct.Name;
+            SetButtonText();
 
             GetDataFromDatabase();
             WireUpTags();
@@ -58,6 +59,11 @@ namespace GroceryOverviewUI
             TagsListBox.SelectedIndexChanged += new EventHandler(TagsListBox_SelectedIndexChanged);
         }
 
+        private void SetButtonText()
+        {
+            ToggleNeedsRefillButton.Text = ClickedProduct.NeedsRefill ? "✘" : "✔";
+        }
+
 
         private void TagsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -78,6 +84,13 @@ namespace GroceryOverviewUI
         private void OkayButton_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void ToggleNeedsRefillButton_Click(object sender, EventArgs e)
+        {
+            GlobalConfig.Connection.ToggleProductNeedsRefill(ClickedProduct);
+            SetButtonText();
+            //TODO - Improve visual
         }
     }
 }

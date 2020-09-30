@@ -125,7 +125,7 @@ namespace GroceryOverviewUI
             UpdateProductsForSelectedTag();
         }
 
-        //TODO - Change other ListBoxes to use DrawItem on other ListBoxes.
+        //TODO - Change other ListBoxes to use DrawItem.
         //TODO - Change NeedsRefill from bool to in with values 0/1/2 (too little/running low/enough)?
         //Need to change the database and ProductModel too if I do that.
         //TODO - Move most of the DrawItem to an outside function.

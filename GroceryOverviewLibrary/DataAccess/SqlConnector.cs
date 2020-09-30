@@ -195,6 +195,11 @@ namespace GroceryOverviewLibrary.DataAccess
             }
         }
 
+        /// <summary>
+        /// Returns a list of products where part of the name matches the input string.
+        /// </summary>
+        /// <param name="searchWord"></param>
+        /// <returns></returns>
         public List<ProductModel> GetProductsBySearch(string searchWord)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
