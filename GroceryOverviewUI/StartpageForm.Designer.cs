@@ -61,6 +61,7 @@
             this.ProductsListBox.TabIndex = 1;
             this.ProductsListBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.ProductsListBox_DrawItem);
             this.ProductsListBox.SelectedIndexChanged += new System.EventHandler(this.ProductsListBox_SelectedIndexChanged);
+            this.ProductsListBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ProductsListBox_MouseMove);
             // 
             // TagDropDown
             // 

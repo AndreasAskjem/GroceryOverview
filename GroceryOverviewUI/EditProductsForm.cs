@@ -23,9 +23,7 @@ namespace GroceryOverviewUI
             {
                 var tagList = value;
 
-                TagModel unselected = new TagModel();
-                unselected.Name = GlobalConfig.DropdownDefaultText();
-                tagList.Insert(0, unselected);
+                tagList.Insert(0, new TagModel { Name = GlobalConfig.DropdownDefaultText() });
 
                 _tags = tagList;
             }
@@ -48,7 +46,7 @@ namespace GroceryOverviewUI
 
         private void GetDataFromDatabase()
         {
-            Tags = GlobalConfig.Connection.GetTags();
+            Tags = GlobalConfig.Connection.GetAllTags();
             Products = GlobalConfig.Connection.GetAllProducts();
         }
 
@@ -63,11 +61,11 @@ namespace GroceryOverviewUI
             EditProductsListBox.SelectedIndexChanged -= new EventHandler(EditProductsListBox_SelectedIndexChanged);
             int topIndex = EditProductsListBox.TopIndex;
 
-            Products.ForEach(p => p.SetDisplayName());
+            //Products.ForEach(p => p.SetDisplayName());
 
             ProductsBindingSource.DataSource = Products;
             EditProductsListBox.DataSource = ProductsBindingSource;
-            EditProductsListBox.DisplayMember = nameof(ProductModel.DisplayName);
+            //EditProductsListBox.DisplayMember = nameof(ProductModel.DisplayName);
             ProductsBindingSource.ResetBindings(false);
             EditProductsListBox.ClearSelected();
 
@@ -96,8 +94,7 @@ namespace GroceryOverviewUI
 
             if (validationResult == "")
             {
-                // The model for the new products is currently returned here but might not be needed.
-                newProduct = GlobalConfig.Connection.AddProduct(newProduct);
+                GlobalConfig.Connection.AddProduct(newProduct);
 
                 EditTagsOfProduct editTagsOfProduct = new EditTagsOfProduct(newProduct);
                 editTagsOfProduct.ShowDialog();
@@ -124,7 +121,6 @@ namespace GroceryOverviewUI
             EditTagsOfProduct editTagsOfProduct = new EditTagsOfProduct(clickedProduct);
             editTagsOfProduct.ShowDialog();
 
-            UpdateListBoxForSelectedTag();
             WireUpProducts();
         }
 
@@ -148,6 +144,17 @@ namespace GroceryOverviewUI
                 Products = GlobalConfig.Connection.GetProductsFilteredByTag(SelectedTag);
             }
             WireUpProducts();
+        }
+
+        private void EditProductsListBox_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            ListBox listBox = (ListBox)sender;
+
+            ProductModel listBoxItem = (ProductModel)listBox.Items[e.Index];
+
+            Color backgroundColor = listBoxItem.NeedsRefill ? Color.MistyRose : Color.LightGreen;
+
+            ListBoxTools.DrawListBox(e, listBoxItem, backgroundColor, Brushes.Black);
         }
     }
 }

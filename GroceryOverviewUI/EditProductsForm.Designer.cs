@@ -66,13 +66,15 @@
             // 
             // EditProductsListBox
             // 
+            this.EditProductsListBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.EditProductsListBox.FormattingEnabled = true;
             this.EditProductsListBox.ItemHeight = 30;
-            this.EditProductsListBox.Location = new System.Drawing.Point(11, 210);
+            this.EditProductsListBox.Location = new System.Drawing.Point(10, 210);
             this.EditProductsListBox.Name = "EditProductsListBox";
             this.EditProductsListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.EditProductsListBox.Size = new System.Drawing.Size(372, 514);
             this.EditProductsListBox.TabIndex = 6;
+            this.EditProductsListBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.EditProductsListBox_DrawItem);
             this.EditProductsListBox.SelectedIndexChanged += new System.EventHandler(this.EditProductsListBox_SelectedIndexChanged);
             // 
             // ProductListBoxLable

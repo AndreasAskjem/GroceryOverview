@@ -28,6 +28,7 @@ namespace GroceryOverviewUI
         private List<ProductModel> SearchResult { get; set; }
 
         private TagModel SelectedTag { get; set; }
+        ToolTip toolTip = new ToolTip();
 
 
         public StartpageForm()
@@ -42,7 +43,7 @@ namespace GroceryOverviewUI
 
         private void GetDataFromDatabase()
         {
-            Tags = GlobalConfig.Connection.GetTags();
+            Tags = GlobalConfig.Connection.GetAllTags();
             Products = GlobalConfig.Connection.GetAllProducts();
         }
 
@@ -144,8 +145,20 @@ namespace GroceryOverviewUI
             WireUpProducts();
         }
 
+        // Needs the property DrawMode set to OwnerDrawFixed in order to work.
         private void ProductsListBox_DrawItem(object sender, DrawItemEventArgs e)
         {
+            ListBox listBox = (ListBox)sender;
+
+            ProductModel listBoxItem = (ProductModel)listBox.Items[e.Index];
+
+            Color backgroundColor = listBoxItem.NeedsRefill ? Color.MistyRose : Color.LightGreen;
+
+            ListBoxTools.DrawListBox(e, listBoxItem, backgroundColor, Brushes.Black);
+
+
+
+            /*
             Brush myBrush = Brushes.Black;
 
             var listBox = (ListBox)sender;
@@ -165,6 +178,22 @@ namespace GroceryOverviewUI
             e.DrawBackground();
             e.Graphics.DrawString(listBoxItem.Name,
                 e.Font, myBrush, e.Bounds, StringFormat.GenericDefault);
+            */
+        }
+
+        private void DrawListBox(object sender, DrawItemEventArgs e, ProductModel listBoxItem, Color backgroundColor, Brush textColor)
+        {
+            e = new DrawItemEventArgs(e.Graphics,
+                                  e.Font,
+                                  e.Bounds,
+                                  e.Index,
+                                  e.State ^ DrawItemState.None,
+                                  e.ForeColor,
+                                  backgroundColor);
+
+            e.DrawBackground();
+            e.Graphics.DrawString(listBoxItem.Name,
+                e.Font, textColor, e.Bounds, StringFormat.GenericDefault);
         }
 
 
@@ -187,6 +216,23 @@ namespace GroceryOverviewUI
             ProductsListBox.ClearSelected();
 
             ProductsListBox.SelectedIndexChanged += new EventHandler(ProductsListBox_SelectedIndexChanged);
+        }
+
+        private void ProductsListBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            int index = ProductsListBox.IndexFromPoint(e.Location);
+
+            if (index != -1 && index < ProductsListBox.Items.Count)
+            {
+                if (toolTip.GetToolTip(ProductsListBox) != ProductsListBox.Items[index].ToString())
+                {   
+                    toolTip.SetToolTip(ProductsListBox, ((ProductModel)ProductsListBox.Items[index]).ToolTip);
+                }
+            }
+            else
+            {
+                toolTip.SetToolTip(this.ProductsListBox, string.Empty);
+            }
         }
     }
 }

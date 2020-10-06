@@ -113,7 +113,7 @@
             this.Font = new System.Drawing.Font("Segoe UI", 15.75F);
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.Name = "EditProductsOfTag";
-            this.Text = "EditProductsOfTag";
+            this.Text = "Edit Products Of Tag";
             this.ResumeLayout(false);
             this.PerformLayout();
 

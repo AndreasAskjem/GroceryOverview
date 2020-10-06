@@ -72,6 +72,7 @@
     <Compile Include="EditTagsOfProduct.Designer.cs">
       <DependentUpon>EditTagsOfProduct.cs</DependentUpon>
     </Compile>
+    <Compile Include="ListBoxTools.cs" />
     <Compile Include="ShoppingListForm.cs">
       <SubType>Form</SubType>
     </Compile>

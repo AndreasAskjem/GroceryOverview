@@ -7,13 +7,13 @@ namespace GroceryOverviewLibrary.DataAccess
 {
     public interface IDataConnection
     {
-        ProductModel AddProduct(ProductModel model);
+        void AddProduct(ProductModel productModel);
         List<ProductModel> GetAllProducts();
-        List<TagModel> GetTags();
+        List<TagModel> GetAllTags();
         List<TagModel> GetTagsBelongingToProduct(ProductModel productModel);
         List<ProductModel> GetProductsFilteredByTag(TagModel tagModel);
         ProductModel ToggleProductNeedsRefill(ProductModel ProductModel);
-        void ToggleProductTagRelation(ProductModel product, TagModel tag);
+        void ToggleProductTagRelation(ProductModel productModel, TagModel tagModel);
         void DeleteProduct(ProductModel productModel);
         TagModel AddTag(TagModel tagModel);
         void DeleteTag(TagModel tagModel);

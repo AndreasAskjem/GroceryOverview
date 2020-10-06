@@ -19,18 +19,19 @@ namespace GroceryOverviewLibrary.DataAccess
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public ProductModel AddProduct(ProductModel productModel)
+        public void AddProduct(ProductModel productModel)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
             {
                 var p = new DynamicParameters();
                 p.Add("@Name", productModel.Name);
                 p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+                p.Add("@NeedsRefill", 0, dbType: DbType.Boolean, direction: ParameterDirection.Output);
 
                 connection.Execute("dbo.spCreateProduct", p, commandType: CommandType.StoredProcedure);
 
                 productModel.id = p.Get<int>("@id");
-                return productModel;
+                productModel.NeedsRefill = p.Get<bool>("@NeedsRefill");
             }
         }
 
@@ -74,7 +75,7 @@ namespace GroceryOverviewLibrary.DataAccess
         /// Gets all tags from the database.
         /// </summary>
         /// <returns></returns>
-        public List<TagModel> GetTags()
+        public List<TagModel> GetAllTags()
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
             {
@@ -151,15 +152,15 @@ namespace GroceryOverviewLibrary.DataAccess
         /// Adds a connection between tag and product if it doesn't exist.
         /// Removes the connection if it does exist.
         /// </summary>
-        /// <param name="product"></param>
-        /// <param name="tag"></param>
-        public void ToggleProductTagRelation(ProductModel product, TagModel tag)
+        /// <param name="productModel"></param>
+        /// <param name="tagModel"></param>
+        public void ToggleProductTagRelation(ProductModel productModel, TagModel tagModel)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
             {
                 var p = new DynamicParameters();
-                p.Add("@productId", product.id);
-                p.Add("@tagId", tag.id);
+                p.Add("@productId", productModel.id);
+                p.Add("@tagId", tagModel.id);
 
                 connection.Execute("dbo.spToggleProductTagRelation", p, commandType: CommandType.StoredProcedure);
             }

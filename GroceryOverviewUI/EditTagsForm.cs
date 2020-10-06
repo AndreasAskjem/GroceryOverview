@@ -26,7 +26,7 @@ namespace GroceryOverviewUI
 
         private void GetDataFromDatabase()
         {
-            Tags = GlobalConfig.Connection.GetTags();
+            Tags = GlobalConfig.Connection.GetAllTags();
         }
 
         private void WireUpTags()

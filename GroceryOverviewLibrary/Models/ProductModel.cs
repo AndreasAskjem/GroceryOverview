@@ -21,6 +21,38 @@ namespace GroceryOverviewLibrary.Models
         public bool NeedsRefill { get; set; }
 
         /// <summary>
+        /// A List of all tags that are currently associated with the tag.
+        /// </summary>
+        public List<TagModel> Tags { get { return GlobalConfig.Connection.GetTagsBelongingToProduct(this); } }
+
+        /// <summary>
+        /// Returns associated tags as a string.
+        /// </summary>
+        public string ToolTip { get { return ConvertTagsToString(); } }
+
+        private string ConvertTagsToString()
+        {
+            string x = "";
+
+            for(int i=0; i<Tags.Count; i++)
+            {
+                TagModel tag = Tags[i];
+                if (i < Tags.Count - 1)
+                {
+                    x += tag.Name;
+                    x += ", ";
+                }
+                else
+                {
+                    x += tag.Name;
+                }
+            }
+
+            return x;
+        }
+
+
+        /// <summary>
         /// The displayed text to use for ListBoxes.
         /// </summary>
         public string DisplayName { get; set; }

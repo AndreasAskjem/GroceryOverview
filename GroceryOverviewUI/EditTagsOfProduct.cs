@@ -33,7 +33,7 @@ namespace GroceryOverviewUI
 
         private void GetDataFromDatabase()
         {
-            AllTags = GlobalConfig.Connection.GetTags();
+            AllTags = GlobalConfig.Connection.GetAllTags();
             SelectedTags = GlobalConfig.Connection.GetTagsBelongingToProduct(ClickedProduct);
         }
 
