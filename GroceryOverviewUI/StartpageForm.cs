@@ -39,6 +39,11 @@ namespace GroceryOverviewUI
 
             WireUpTags();
             WireUpProducts();
+
+            SearchTextBox.TextChanged -= new EventHandler(SearchTextBox_TextChanged);
+            SearchTextBox.Text = "Search  ";
+            SearchTextBox.ForeColor = Color.Gray;
+            SearchTextBox.TextChanged += new EventHandler(SearchTextBox_TextChanged);
         }
 
         private void GetDataFromDatabase()
@@ -68,11 +73,6 @@ namespace GroceryOverviewUI
 
             ProductsListBox.TopIndex = topIndex;
             ProductsListBox.SelectedIndexChanged += new EventHandler(ProductsListBox_SelectedIndexChanged);
-
-            //Empties the search box when something else updates the ListBox.
-            SearchTextBox.TextChanged -= new EventHandler(SearchTextBox_TextChanged);
-            SearchTextBox.Text = "";
-            SearchTextBox.TextChanged += new EventHandler(SearchTextBox_TextChanged);
         }
 
 
@@ -119,17 +119,19 @@ namespace GroceryOverviewUI
         private void TagDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox tagDropDown = (ComboBox)sender;
-
             SelectedTag = (TagModel)tagDropDown.SelectedValue;
 
-
             UpdateProductsForSelectedTag();
+
+            SearchTextBox.TextChanged -= new EventHandler(SearchTextBox_TextChanged);
+            SearchTextBox.Text = "";
+            SearchTextBox.TextChanged += new EventHandler(SearchTextBox_TextChanged);
         }
 
         //TODO - Change other ListBoxes to use DrawItem.
         //TODO - Change NeedsRefill from bool to in with values 0/1/2 (too little/running low/enough)?
         //Need to change the database and ProductModel too if I do that.
-        //TODO - Move most of the DrawItem to an outside function.
+        //TODO - Error handeling for failing to connect to database?
 
 
         private void UpdateProductsForSelectedTag()
@@ -150,74 +152,33 @@ namespace GroceryOverviewUI
         {
             ListBox listBox = (ListBox)sender;
 
+            if(listBox.Items.Count < 1){ return; } // Avoids crash when ListBox is empty.
+
             ProductModel listBoxItem = (ProductModel)listBox.Items[e.Index];
 
             Color backgroundColor = listBoxItem.NeedsRefill ? Color.MistyRose : Color.LightGreen;
 
             ListBoxTools.DrawListBox(e, listBoxItem, backgroundColor, Brushes.Black);
-
-
-
-            /*
-            Brush myBrush = Brushes.Black;
-
-            var listBox = (ListBox)sender;
-            
-            var listBoxItem = (ProductModel)listBox.Items[e.Index];
-
-            var backgroundColor = listBoxItem.NeedsRefill ? Color.MistyRose : Color.LightGreen;
-
-            e = new DrawItemEventArgs(e.Graphics,
-                                  e.Font,
-                                  e.Bounds,
-                                  e.Index,
-                                  e.State ^ DrawItemState.None,
-                                  e.ForeColor,
-                                  backgroundColor);
-
-            e.DrawBackground();
-            e.Graphics.DrawString(listBoxItem.Name,
-                e.Font, myBrush, e.Bounds, StringFormat.GenericDefault);
-            */
-        }
-
-        private void DrawListBox(object sender, DrawItemEventArgs e, ProductModel listBoxItem, Color backgroundColor, Brush textColor)
-        {
-            e = new DrawItemEventArgs(e.Graphics,
-                                  e.Font,
-                                  e.Bounds,
-                                  e.Index,
-                                  e.State ^ DrawItemState.None,
-                                  e.ForeColor,
-                                  backgroundColor);
-
-            e.DrawBackground();
-            e.Graphics.DrawString(listBoxItem.Name,
-                e.Font, textColor, e.Bounds, StringFormat.GenericDefault);
         }
 
 
         private void SearchTextBox_TextChanged(object sender, EventArgs e)
         {
-            string searchWord = SearchTextBox.Text;
-            if(searchWord == "") {
+            
+            if(SearchTextBox.Text == "") {
                 UpdateProductsForSelectedTag();
                 return;
-            } //UpdateForSelectedTag?
+            }
 
-            SearchResult = GlobalConfig.Connection.GetProductsBySearch(searchWord);
+            Products = GlobalConfig.Connection.GetProductsBySearch(SearchTextBox.Text);
 
-
-            ProductsListBox.SelectedIndexChanged -= new EventHandler(ProductsListBox_SelectedIndexChanged);
-
-            ProductsBindingSource.DataSource = SearchResult;
-            ProductsListBox.DataSource = ProductsBindingSource;
-            ProductsBindingSource.ResetBindings(false);
-            ProductsListBox.ClearSelected();
-
-            ProductsListBox.SelectedIndexChanged += new EventHandler(ProductsListBox_SelectedIndexChanged);
+            WireUpProducts();
+            return;
         }
 
+
+        // This function is taken from here:
+        // https://social.msdn.microsoft.com/Forums/windows/en-US/894d0814-dcf1-4cd6-9cca-2c6239794442/list-box-tooltip
         private void ProductsListBox_MouseMove(object sender, MouseEventArgs e)
         {
             int index = ProductsListBox.IndexFromPoint(e.Location);
@@ -231,8 +192,61 @@ namespace GroceryOverviewUI
             }
             else
             {
-                toolTip.SetToolTip(this.ProductsListBox, string.Empty);
+                toolTip.SetToolTip(ProductsListBox, string.Empty);
             }
+        }
+
+        private void SearchTextBox_Enter(object sender, EventArgs e)
+        {
+            var x = SearchTextBox.Focused;
+
+
+            if (SearchTextBox.Text == "Search  ")
+            {
+                SearchTextBox.TextChanged -= new EventHandler(SearchTextBox_TextChanged);
+
+                SearchTextBox.Text = "";
+                SearchTextBox.ForeColor = Color.Black;
+
+                SearchTextBox.TextChanged += new EventHandler(SearchTextBox_TextChanged);
+            }
+        }
+
+        private void SearchTextBox_Leave(object sender, EventArgs e)
+        {
+            //if (SearchTextBox.Text == "")
+            //{
+            //    SearchTextBox.TextChanged -= new EventHandler(SearchTextBox_TextChanged);
+            //    SearchTextBox.Text = "Search  ";
+            //    SearchTextBox.ForeColor = Color.Gray;
+            //    SearchTextBox.TextChanged += new EventHandler(SearchTextBox_TextChanged);
+            //}
+        }
+
+        private void ShowNeedsRefill_CheckedChanged(object sender, EventArgs e)
+        {
+            var x = (CheckBox)sender;
+            var isChecked = x.Checked;
+
+            List<ProductModel> allProducts = GlobalConfig.Connection.GetAllProducts();
+            List<ProductModel> productsNeedingRefill = new List<ProductModel>();
+
+            if (isChecked)
+            {
+                allProducts.ForEach(product =>
+                {
+                    if (product.NeedsRefill)
+                    {
+                        productsNeedingRefill.Add(product);
+                    }
+                });
+                Products = productsNeedingRefill;
+            }
+            else
+            {
+                Products = allProducts;
+            }
+            WireUpProducts();
         }
     }
 }

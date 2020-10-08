@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.HeaderLable = new System.Windows.Forms.Label();
             this.ProductsListBox = new System.Windows.Forms.ListBox();
             this.TagDropDown = new System.Windows.Forms.ComboBox();
             this.ShoppingListButton = new System.Windows.Forms.Button();
@@ -37,17 +36,8 @@
             this.ProductListBoxLable = new System.Windows.Forms.Label();
             this.SearchTextBox = new System.Windows.Forms.TextBox();
             this.SearchLable = new System.Windows.Forms.Label();
+            this.ShowNeedsRefill = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
-            // 
-            // HeaderLable
-            // 
-            this.HeaderLable.AutoSize = true;
-            this.HeaderLable.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HeaderLable.Location = new System.Drawing.Point(127, 9);
-            this.HeaderLable.Name = "HeaderLable";
-            this.HeaderLable.Size = new System.Drawing.Size(127, 37);
-            this.HeaderLable.TabIndex = 0;
-            this.HeaderLable.Text = "Overview";
             // 
             // ProductsListBox
             // 
@@ -67,7 +57,7 @@
             // 
             this.TagDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.TagDropDown.FormattingEnabled = true;
-            this.TagDropDown.Location = new System.Drawing.Point(13, 56);
+            this.TagDropDown.Location = new System.Drawing.Point(14, 12);
             this.TagDropDown.Name = "TagDropDown";
             this.TagDropDown.Size = new System.Drawing.Size(371, 38);
             this.TagDropDown.TabIndex = 2;
@@ -110,7 +100,7 @@
             // 
             this.ProductListBoxLable.AutoSize = true;
             this.ProductListBoxLable.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ProductListBoxLable.Location = new System.Drawing.Point(159, 173);
+            this.ProductListBoxLable.Location = new System.Drawing.Point(159, 176);
             this.ProductListBoxLable.Name = "ProductListBoxLable";
             this.ProductListBoxLable.Size = new System.Drawing.Size(71, 21);
             this.ProductListBoxLable.TabIndex = 9;
@@ -118,21 +108,36 @@
             // 
             // SearchTextBox
             // 
-            this.SearchTextBox.Location = new System.Drawing.Point(14, 130);
+            this.SearchTextBox.Location = new System.Drawing.Point(14, 91);
+            this.SearchTextBox.MaxLength = 50;
             this.SearchTextBox.Name = "SearchTextBox";
-            this.SearchTextBox.Size = new System.Drawing.Size(370, 35);
+            this.SearchTextBox.Size = new System.Drawing.Size(371, 35);
             this.SearchTextBox.TabIndex = 10;
             this.SearchTextBox.TextChanged += new System.EventHandler(this.SearchTextBox_TextChanged);
+            this.SearchTextBox.Enter += new System.EventHandler(this.SearchTextBox_Enter);
+            this.SearchTextBox.Leave += new System.EventHandler(this.SearchTextBox_Leave);
             // 
             // SearchLable
             // 
             this.SearchLable.AutoSize = true;
             this.SearchLable.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.SearchLable.Location = new System.Drawing.Point(167, 106);
+            this.SearchLable.Location = new System.Drawing.Point(167, 67);
             this.SearchLable.Name = "SearchLable";
             this.SearchLable.Size = new System.Drawing.Size(57, 21);
             this.SearchLable.TabIndex = 11;
             this.SearchLable.Text = "Search";
+            // 
+            // ShowNeedsRefill
+            // 
+            this.ShowNeedsRefill.AutoSize = true;
+            this.ShowNeedsRefill.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.ShowNeedsRefill.Location = new System.Drawing.Point(14, 132);
+            this.ShowNeedsRefill.Name = "ShowNeedsRefill";
+            this.ShowNeedsRefill.Size = new System.Drawing.Size(263, 25);
+            this.ShowNeedsRefill.TabIndex = 12;
+            this.ShowNeedsRefill.Text = "Only show products needing refill";
+            this.ShowNeedsRefill.UseVisualStyleBackColor = true;
+            this.ShowNeedsRefill.CheckedChanged += new System.EventHandler(this.ShowNeedsRefill_CheckedChanged);
             // 
             // StartpageForm
             // 
@@ -140,6 +145,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(396, 736);
+            this.Controls.Add(this.ShowNeedsRefill);
             this.Controls.Add(this.SearchLable);
             this.Controls.Add(this.SearchTextBox);
             this.Controls.Add(this.ProductListBoxLable);
@@ -148,7 +154,6 @@
             this.Controls.Add(this.ShoppingListButton);
             this.Controls.Add(this.TagDropDown);
             this.Controls.Add(this.ProductsListBox);
-            this.Controls.Add(this.HeaderLable);
             this.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.Name = "StartpageForm";
@@ -160,8 +165,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label HeaderLable;
         private System.Windows.Forms.ListBox ProductsListBox;
         private System.Windows.Forms.ComboBox TagDropDown;
         private System.Windows.Forms.Button ShoppingListButton;
@@ -170,6 +173,7 @@
         private System.Windows.Forms.Label ProductListBoxLable;
         private System.Windows.Forms.TextBox SearchTextBox;
         private System.Windows.Forms.Label SearchLable;
+        private System.Windows.Forms.CheckBox ShowNeedsRefill;
     }
 }
 
