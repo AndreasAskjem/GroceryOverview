@@ -29,5 +29,10 @@ namespace GroceryOverviewLibrary
         {
             return "All Products";
         }
+
+        public static string AppKeyLookup(string key)
+        {
+            return ConfigurationManager.AppSettings[key];
+        }
     }
 }

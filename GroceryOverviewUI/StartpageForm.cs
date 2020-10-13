@@ -3,6 +3,7 @@ using GroceryOverviewLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Text;
 using System.Windows.Forms;
 
 namespace GroceryOverviewUI
@@ -110,11 +111,37 @@ namespace GroceryOverviewUI
 
         private void ShoppingListButton_Click(object sender, EventArgs e)
         {
-            ShoppingListForm shoppingList = new ShoppingListForm();
-            shoppingList.ShowDialog();
+            BuildEmail();
+
+
+            
+            //ShoppingListForm shoppingList = new ShoppingListForm();
+            //shoppingList.ShowDialog();
+
+            //string fromAddress = GlobalConfig.AppKeyLookup("senderEmail");
         }
 
+        private void BuildEmail()
+        {
+            List<ProductModel> allProducts = GlobalConfig.Connection.GetAllProducts();
+            List<ProductModel> productsNeedingRefill = new List<ProductModel>();
 
+            allProducts.ForEach(product =>
+            {
+                if (product.NeedsRefill)
+                {
+                    productsNeedingRefill.Add(product);
+                }
+            });
+
+            StringBuilder body = new StringBuilder();
+
+            productsNeedingRefill.ForEach(product => body.AppendLine(product.Name));
+            
+
+
+            EmailLogic.SendEmail(GlobalConfig.AppKeyLookup("recieverEmail"), $"Shopping List - {DateTime.UtcNow.Date:d}", body.ToString());
+        }
 
         private void TagDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -124,7 +151,8 @@ namespace GroceryOverviewUI
             UpdateProductsForSelectedTag();
 
             SearchTextBox.TextChanged -= new EventHandler(SearchTextBox_TextChanged);
-            SearchTextBox.Text = "";
+            SearchTextBox.Text = "Search  ";
+            SearchTextBox.ForeColor = Color.Gray;
             SearchTextBox.TextChanged += new EventHandler(SearchTextBox_TextChanged);
         }
 
@@ -214,13 +242,13 @@ namespace GroceryOverviewUI
 
         private void SearchTextBox_Leave(object sender, EventArgs e)
         {
-            //if (SearchTextBox.Text == "")
-            //{
-            //    SearchTextBox.TextChanged -= new EventHandler(SearchTextBox_TextChanged);
-            //    SearchTextBox.Text = "Search  ";
-            //    SearchTextBox.ForeColor = Color.Gray;
-            //    SearchTextBox.TextChanged += new EventHandler(SearchTextBox_TextChanged);
-            //}
+            if (SearchTextBox.Text == "")
+            {
+                SearchTextBox.TextChanged -= new EventHandler(SearchTextBox_TextChanged);
+                SearchTextBox.Text = "Search  ";
+                SearchTextBox.ForeColor = Color.Gray;
+                SearchTextBox.TextChanged += new EventHandler(SearchTextBox_TextChanged);
+            }
         }
 
         private void ShowNeedsRefill_CheckedChanged(object sender, EventArgs e)
